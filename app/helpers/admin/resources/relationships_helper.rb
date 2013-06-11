@@ -11,6 +11,7 @@ module Admin::Resources::RelationshipsHelper
   def build_pagination
     items_per_page = @model_to_relate.typus_options_for(:per_page)
     data = @item.send(@field).order(@model_to_relate.typus_order_by).where(set_conditions)
+    @data_count = data.count
     page = params["#{@association_name}_page"]
 
     @items = if defined?(Kaminari)
