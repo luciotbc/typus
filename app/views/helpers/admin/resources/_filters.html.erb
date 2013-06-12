@@ -11,6 +11,10 @@
         <%= hidden_field_tag key, value %>
       <% end %>
 
+      <%= scope_filters.each do |key, value| %>
+        <li><%= select_tag key, options_for_select(value, params[key]) %></li>
+      <% end %>
+
       <li><%= submit_tag Typus::I18n.t("Filter"), :name => nil, 'data-disable-with' => Typus::I18n.t("Sending data ...") %></li>
     </ul>
   </div>
