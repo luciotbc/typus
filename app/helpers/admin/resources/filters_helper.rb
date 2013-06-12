@@ -13,7 +13,7 @@ module Admin::Resources::FiltersHelper
       locals[:hidden_filters] = params.dup.delete_if { |k, v| rejections.include?(k) }
 
       locals[:scope_filters] = resource.typus_scope_filters.map do |key, value|
-                                 { key: key
+                                 { key: key,
                                    value: set_context.send(filter.to_s.pluralize).to_a }
                                end
 
