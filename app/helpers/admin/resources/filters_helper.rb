@@ -14,7 +14,7 @@ module Admin::Resources::FiltersHelper
 
       locals[:scope_filters] = resource.get_typus_scope_filters.map do |key, value|
                                  { key: key,
-                                   value: set_context.send(filter.to_s.pluralize).to_a }
+                                   value: set_context.send(key.to_s.pluralize).to_a }
                                end
 
       render "helpers/admin/resources/filters", locals
