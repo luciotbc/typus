@@ -84,7 +84,7 @@ module Admin::Resources::DataTypes::BelongsToHelper
     default_options = { :controller => "/admin/#{klass.to_resource}",
                         :action => 'new',
                         :attribute => options[:attribute],
-                        :_popup => true }
+                        :_popup => Typus.popups }
     link_to Typus::I18n.t("Add"), default_options, { :class => 'iframe' }
   end
 

@@ -127,6 +127,10 @@ module Typus
   mattr_accessor :url_namespace
   @@url_namespace = "admin"
 
+  mattr_accessor :popups
+  @@popups = true
+
+
   class << self
 
     # Default way to setup typus. Run `rails generate typus` to create a
