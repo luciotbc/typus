@@ -124,6 +124,9 @@ module Typus
   mattr_accessor :ip_whitelist
   @@ip_whitelist = []
 
+  mattr_accessor :url_namespace
+  @@url_namespace = "admin"
+
   class << self
 
     # Default way to setup typus. Run `rails generate typus` to create a
