@@ -17,8 +17,9 @@
   <ul class="predefined_filters">
     <li>
       <%= link_to Typus::I18n.t("All"), params.dup.cleanup.merge(:action => 'index') %>
-      <%= "(#{resource.count})" if @resource.typus_options_for(:counters) %>
+      <%= "(#{@resource.count})" if @resource.typus_options_for(:counters) %>
     </li>
+
 
     <% @resource.typus_scopes.each do |scope| %>
       <li>

@@ -35,7 +35,7 @@ class Admin::ResourcesController < Admin::BaseController
   end
 
   def new
-    @item = @resource.new(item_params_for_new)
+    @item = @resource.new(item_params_for_new, :as => current_role)
 
     respond_to do |format|
       format.html
@@ -45,7 +45,7 @@ class Admin::ResourcesController < Admin::BaseController
 
   def create
     @item = @resource.new
-    @item.assign_attributes(item_params_for_create)
+    @item.assign_attributes(item_params_for_create, :as => current_role)
 
     set_attributes_on_create
 
@@ -86,7 +86,7 @@ class Admin::ResourcesController < Admin::BaseController
 
   def update
     respond_to do |format|
-      if @item.update_attributes(item_params_for_update)
+      if @item.update_attributes(item_params_for_update, :as => current_role)
         set_attributes_on_update
         format.html { redirect_on_success }
         format.json { render :json => @item }
@@ -150,6 +150,7 @@ class Admin::ResourcesController < Admin::BaseController
     set_scope
     set_wheres
     set_joins
+    set_filter_scopes
     check_resources_ownership if @resource.typus_options_for(:only_user_items)
     set_order if @resource.respond_to?(:order)
     set_eager_loading
@@ -179,6 +180,14 @@ class Admin::ResourcesController < Admin::BaseController
   def set_joins
     @resource.build_my_joins(params).each do |join|
       @resource = @resource.joins(join)
+    end
+  end
+
+  def set_filter_scopes
+    @resource.get_typus_scope_filters.each do |f|
+      if params[f.to_s].present?
+        @resource = @resource.send(f, params[f.to_s])
+      end
     end
   end
 

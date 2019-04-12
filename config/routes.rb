@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   routes_block = lambda do
 
-    dashboard = Typus.subdomain ? "/dashboard" : "/admin/dashboard"
+    dashboard = Typus.subdomain ? "/dashboard" : "/#{Typus.url_namespace}/dashboard"
 
     get "/" => redirect(dashboard)
     get "dashboard" => "dashboard#index", :as => "dashboard_index"
@@ -40,7 +40,7 @@ Rails.application.routes.draw do
       namespace :admin, :path => "", &routes_block
     end
   else
-    scope "admin", {:module => :admin, :as => "admin"}, &routes_block
+    scope "#{Typus.url_namespace}", {:module => :admin, :as => "admin"}, &routes_block
   end
 
 end
