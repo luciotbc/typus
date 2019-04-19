@@ -4,7 +4,7 @@
     <% html_class = @resource.model_name.to_s.eql?(resource.model_name.to_s) ? 'active' : 'inactive' %>
 
     <ul>
-      <%= link_to "/admin/#{resource.to_resource}" do %>
+      <%= link_to "/#{Typus.url_namespace}/#{resource.to_resource}" do %>
         <li class="header <%= html_class %>">
           <%= resource.model_name.human.pluralize %>
         </li>
