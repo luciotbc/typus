@@ -22,9 +22,9 @@ module Admin::Resources::DataTypes::HasOneHelper
     if admin_user.can?("create", klass)
       default_options = { :controller => "/admin/#{klass.to_resource}",
                           :action => "new",
-                          :_popup => true }
+                        }
 
-      link_to Typus::I18n.t("Add"), default_options.merge(options), { :class => "iframe_with_page_reload" }
+      link_to Typus::I18n.t("Add"), default_options.merge(options)
     end
   end
 
