@@ -155,6 +155,11 @@ module Typus
           Typus::Configuration.config[name] or raise "No typus configuration specified for #{name}"
         end
 
+        def read_model_config_for_role(role)
+          return unless read_model_config['roles'].present?
+          read_model_config['roles'][role]
+        end
+
         #--
         #     >> Post.to_resource
         #     => "posts"

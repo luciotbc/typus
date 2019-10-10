@@ -1,7 +1,7 @@
 module Admin::Resources::FiltersHelper
 
   def build_filters(resource = @resource, params = self.params)
-    if (typus_filters = resource.typus_filters).any?
+    if (typus_filters = resource.typus_filters(admin_user.role)).any?
       locals = {}
 
       locals[:filters] = typus_filters.map do |key, value|
@@ -12,7 +12,7 @@ module Admin::Resources::FiltersHelper
       rejections = %w(controller action locale utf8 sort_order order_by) + locals[:filters].map { |f| f[:key] }
       locals[:hidden_filters] = params.dup.delete_if { |k, v| rejections.include?(k) }
 
-      locals[:scope_filters] = resource.get_typus_scope_filters.map do |key, value|
+      locals[:scope_filters] = resource.get_typus_scope_filters(admin_user.role).map do |key, value|
                                  { key: key,
                                    value: scope_filter_selection(key) }
                                end

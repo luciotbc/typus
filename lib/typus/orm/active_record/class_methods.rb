@@ -79,9 +79,9 @@ module Typus
           reflect_on_association(field).macro if reflect_on_association(field)
         end
 
-        def typus_filters
+        def typus_filters(role)
           filters = ActiveSupport::OrderedHash.new.tap do |fields_with_type|
-            get_typus_filters.each do |field|
+            get_typus_filters(role).each do |field|
               fields_with_type[field.to_s] = association_attribute?(field) || model_fields[field.to_sym]
             end
           end
@@ -89,13 +89,25 @@ module Typus
           filters.reject { |k, v| [:time].include?(v) }
         end
 
-        def get_typus_filters
-          data = read_model_config['filters'] || ""
+        def get_typus_filters(role)
+          role_config = read_model_config_for_role(role)
+          if role_config.present? && role_config['filters'].present?
+            data = role_config['filters']
+            data = "" if data == "nil"
+          else
+            data = read_model_config['filters'] || ""
+          end
           data.extract_settings.map(&:to_sym)
         end
 
-        def get_typus_scope_filters
-          data = read_model_config['scope_filters'] || ""
+        def get_typus_scope_filters(role)
+          role_config = read_model_config_for_role(role)
+          if role_config.present? && role_config['scope_filters'].present?
+            data = role_config['scope_filters']
+            data = "" if data == "nil"
+          else
+            data = read_model_config['scope_filters'] || ""
+          end
           data.extract_settings.map(&:to_sym)
         end
 

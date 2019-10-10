@@ -184,7 +184,7 @@ class Admin::ResourcesController < Admin::BaseController
   end
 
   def set_filter_scopes
-    @resource.get_typus_scope_filters.each do |f|
+    @resource.get_typus_scope_filters(admin_user.role).each do |f|
       if params[f.to_s].present?
         @resource = @resource.send(f, params[f.to_s])
       end
