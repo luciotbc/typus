@@ -12,7 +12,7 @@
   <%= admin_display_flash_message %>
   <%= render 'new' %>
 
-  <% locals = { :options => params.dup.cleanup.merge(:action => 'create') } %>
+  <% locals = { :options => params.to_unsafe_h.cleanup.merge(:action => 'create') } %>
   <%= render 'form', locals %>
 <% end %>
 

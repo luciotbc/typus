@@ -10,7 +10,7 @@ module Admin::Resources::FiltersHelper
                          end
 
       rejections = %w(controller action locale utf8 sort_order order_by) + locals[:filters].map { |f| f[:key] }
-      locals[:hidden_filters] = params.dup.delete_if { |k, v| rejections.include?(k) }
+      locals[:hidden_filters] = params.to_unsafe_h.delete_if { |k, _| rejections.include?(k) }
 
       locals[:scope_filters] = resource.get_typus_scope_filters(admin_user.role).map do |key, value|
                                  { key: key,
@@ -18,7 +18,7 @@ module Admin::Resources::FiltersHelper
                                end
 
       rejections = %w(controller action locale utf8 sort_order order_by page) + locals[:filters].map { |f| f[:key] } + locals[:scope_filters].map { |f| f[:key].to_s }
-      locals[:hidden_filters] = params.dup.delete_if { |k, v| rejections.include?(k) }
+      locals[:hidden_filters] = params.to_unsafe_h.delete_if { |k, _| rejections.include?(k) }
       render "helpers/admin/resources/filters", locals
     end
   end

@@ -16,7 +16,7 @@
 
   <ul class="predefined_filters">
     <li>
-      <%= link_to Typus::I18n.t("All"), params.dup.cleanup.merge(:action => 'index') %>
+      <%= link_to Typus::I18n.t("All"), params.to_unsafe_h.cleanup.merge(:action => 'index') %>
       <%= "(#{@resource.count})" if @resource.typus_options_for(:counters) %>
     </li>
 
@@ -30,7 +30,7 @@
 
     <% predefined_filters.each do |filter, action, scope| %>
       <li>
-        <% url = action.is_a?(String) ? params.dup.cleanup.merge(:action => action) : action %>
+        <% url = action.is_a?(String) ? params.to_unsafe_h.cleanup.merge(:action => action) : action %>
         <%= link_to Typus::I18n.t(filter), url %>
         <%= "(#{@resource.send(scope).count})" if @resource.typus_options_for(:counters) && scope && @resource.respond_to?(scope) %>
       </li>

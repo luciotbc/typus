@@ -27,7 +27,7 @@
   <%= admin_display_flash_message %>
   <%= render 'edit' %>
 
-  <% locals = { :options => params.dup.cleanup.merge!(:action => 'update') } %>
+  <% locals = { :options => params.to_unsafe_h.cleanup.merge!(:action => 'update') } %>
   <%= render 'form', locals %>
 
   <%= typus_relationships unless headless_mode? %>

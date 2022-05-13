@@ -32,7 +32,7 @@ module Admin::Resources::TableHelper
           switch = sort_order.last if params[:order_by].eql?(order_by)
           options = { :order_by => order_by, :sort_order => sort_order.first }
           message = [content, switch].compact.join(" ").html_safe
-          content = link_to(message, params.merge(options))
+          content = link_to(message, params.to_unsafe_h.merge(options))
         end
       end
 
@@ -52,7 +52,7 @@ module Admin::Resources::TableHelper
     @resource_actions.map do |body, url, options, proc|
       next if proc && proc.respond_to?(:call) && proc.call(item) == false
       { :message => Typus::I18n.t(body),
-        :url => params.dup.cleanup.merge({ :controller => "/admin/#{model.to_resource}", :id => item.id }).merge(url),
+        :url => params.to_unsafe_h.cleanup.merge({ :controller => "/admin/#{model.to_resource}", :id => item.id }).merge(url),
         :options => options }
     end
   end
