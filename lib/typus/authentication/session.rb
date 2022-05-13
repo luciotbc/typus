@@ -106,7 +106,7 @@ module Typus
       #
       def set_attributes_on_update
         if @resource.typus_user_id? && admin_user.is_not_root?
-          @item.update_attributes(Typus.user_foreign_key => admin_user.id)
+          @item.update(Typus.user_foreign_key => admin_user.id)
         end
       end
 

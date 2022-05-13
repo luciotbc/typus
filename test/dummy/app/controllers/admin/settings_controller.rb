@@ -8,7 +8,7 @@ class Admin::SettingsController < Admin::BaseController
   def update
     params[:settings].each do |key, value|
       if setting = Admin::Setting.find_by_key(key)
-        setting.update_attributes :value => value
+        setting.update value: value
       else
         Admin::Setting.create(:key => key, :value => value)
       end
