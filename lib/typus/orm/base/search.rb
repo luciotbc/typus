@@ -60,6 +60,12 @@ module Typus
 
         def build_my_joins(params)
           query_params = params.dup
+
+          # HACK: Ideally everything should be a `ActionController::Parameters` object
+          unless params.is_a?(Hash)
+            query_params = query_params.permit!.to_h
+          end
+
           query_params.reject! { |k, v| !model_relationships.keys.include?(k.to_sym) }
           query_params.compact_blank.map { |k, v| k.to_sym }
         end
